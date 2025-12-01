@@ -134,6 +134,7 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({
     return (
       <div
         key={square}
+        data-square={square}
         onClick={() => handleSquareClick(square)}
         className={`relative w-full h-full flex items-center justify-center cursor-pointer ${!Object.keys(customBgStyle).length ? bgColorClass : ''} transition-all duration-150 select-none`}
         style={customBgStyle}

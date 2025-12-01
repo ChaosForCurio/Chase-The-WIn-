@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Chess } from 'chess.js';
 import { ChessBoard } from './components/ChessBoard';
+import { GameOverModal } from './components/GameOverModal';
 import { getGeminiMove } from './services/geminiService';
 import { Difficulty, GameStatus } from './types';
 import { RotateCcw, Settings, Trophy, Cpu, User } from 'lucide-react';
@@ -165,8 +166,14 @@ export default function App() {
   const whiteCaptures = captures.filter(p => p.startsWith('b')); // Pieces White has captured (Black pieces)
   const blackCaptures = captures.filter(p => p.startsWith('w')); // Pieces Black has captured (White pieces)
 
+  // Determine winner for the modal
+  const winner = status === GameStatus.CHECKMATE
+    ? (game.turn() === 'b' ? 'You' : 'Gemini AI')
+    : undefined;
+
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center p-4 font-sans">
+      <GameOverModal status={status} onRestart={handleReset} winner={winner} />
       
       {/* Header */}
       <header className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between mb-8 gap-4 px-2">
