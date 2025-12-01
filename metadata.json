@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Chess Master",
+  "description": "A modern, responsive chess application powered by Google Gemini. Challenge the AI with different difficulty levels, analyze positions, and enjoy a sleek, mobile-first interface.",
+  "requestFramePermissions": []
+}
