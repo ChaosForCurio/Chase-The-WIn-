@@ -233,7 +233,7 @@ export default function App() {
             </div>
         </div>
 
-        {/* CENTER COLUMN: Board & History */}
+        {/* CENTER COLUMN: Board Only */}
         <div className="flex flex-col items-center gap-6 order-1 lg:order-2 w-full">
            <ChessBoard 
               game={game} 
@@ -242,50 +242,13 @@ export default function App() {
               isAiThinking={aiThinking || status !== GameStatus.IN_PROGRESS}
               lastMove={lastMove}
             />
-
-            {/* History Panel - Centered below board */}
-            <div className="w-full max-w-[600px] flex flex-col h-[250px] bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl overflow-hidden shadow-xl">
-                 <div className="p-3 border-b border-slate-700 bg-slate-800/80 flex items-center justify-between">
-                    <h3 className="font-bold text-slate-200 flex items-center gap-2 text-sm">
-                        <Settings className="w-4 h-4" /> Move History
-                    </h3>
-                    <div className="text-xs text-slate-500 font-mono">
-                        {Math.ceil(history.length / 2)} moves
-                    </div>
-                 </div>
-                 <div className="flex-1 overflow-y-auto p-0 custom-scrollbar">
-                    {history.length === 0 ? (
-                        <div className="text-center text-slate-500 py-10 text-sm italic">Game hasn't started</div>
-                    ) : (
-                        <table className="w-full text-sm text-left">
-                             <thead className="bg-slate-900/90 text-slate-400 font-medium sticky top-0 z-10 backdrop-blur-sm shadow-sm">
-                                 <tr>
-                                     <th className="px-4 py-2 w-16">#</th>
-                                     <th className="px-4 py-2">White</th>
-                                     <th className="px-4 py-2">Black</th>
-                                 </tr>
-                             </thead>
-                             <tbody className="divide-y divide-slate-700/50">
-                                {Array.from({ length: Math.ceil(history.length / 2) }).map((_, i) => (
-                                    <tr key={i} className="hover:bg-white/5 transition-colors">
-                                        <td className="px-4 py-2 text-slate-500 font-mono border-r border-slate-700/50 bg-slate-900/20">{i + 1}</td>
-                                        <td className="px-4 py-2 text-slate-300 font-medium">{history[i * 2]}</td>
-                                        <td className="px-4 py-2 text-slate-300 font-medium">{history[i * 2 + 1] || ''}</td>
-                                    </tr>
-                                ))}
-                                <tr ref={historyEndRef} />
-                             </tbody>
-                        </table>
-                    )}
-                 </div>
-            </div>
         </div>
 
-        {/* RIGHT COLUMN: User & Controls */}
+        {/* RIGHT COLUMN: User & Controls & History */}
         <div className="flex flex-col gap-6 order-3 h-full">
             
             {/* User Panel */}
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 shadow-xl flex flex-col gap-4 sticky top-4">
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 shadow-xl flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
@@ -331,6 +294,44 @@ export default function App() {
                     </button>
                 </div>
             </div>
+
+            {/* History Panel - Moved here */}
+            <div className="w-full flex flex-col flex-1 min-h-[250px] bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl overflow-hidden shadow-xl">
+                 <div className="p-3 border-b border-slate-700 bg-slate-800/80 flex items-center justify-between">
+                    <h3 className="font-bold text-slate-200 flex items-center gap-2 text-sm">
+                        <Settings className="w-4 h-4" /> Move History
+                    </h3>
+                    <div className="text-xs text-slate-500 font-mono">
+                        {Math.ceil(history.length / 2)} moves
+                    </div>
+                 </div>
+                 <div className="flex-1 overflow-y-auto p-0 custom-scrollbar">
+                    {history.length === 0 ? (
+                        <div className="text-center text-slate-500 py-10 text-sm italic">Game hasn't started</div>
+                    ) : (
+                        <table className="w-full text-sm text-left">
+                             <thead className="bg-slate-900/90 text-slate-400 font-medium sticky top-0 z-10 backdrop-blur-sm shadow-sm">
+                                 <tr>
+                                     <th className="px-4 py-2 w-12">#</th>
+                                     <th className="px-4 py-2">White</th>
+                                     <th className="px-4 py-2">Black</th>
+                                 </tr>
+                             </thead>
+                             <tbody className="divide-y divide-slate-700/50">
+                                {Array.from({ length: Math.ceil(history.length / 2) }).map((_, i) => (
+                                    <tr key={i} className="hover:bg-white/5 transition-colors">
+                                        <td className="px-4 py-2 text-slate-500 font-mono border-r border-slate-700/50 bg-slate-900/20">{i + 1}</td>
+                                        <td className="px-4 py-2 text-slate-300 font-medium">{history[i * 2]}</td>
+                                        <td className="px-4 py-2 text-slate-300 font-medium">{history[i * 2 + 1] || ''}</td>
+                                    </tr>
+                                ))}
+                                <tr ref={historyEndRef} />
+                             </tbody>
+                        </table>
+                    )}
+                 </div>
+            </div>
+
         </div>
 
       </div>
